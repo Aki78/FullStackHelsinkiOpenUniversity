@@ -1,0 +1,15 @@
+def b=browser; s=server; HGET=HTTP GET; HPOST=HTTP POST
+def theHttp=https://studies.cs.helsinki.fi/exampleapp
+def ->=browser->server; <-=server-->browser;
+def nob=note over browser; nos=note over server; en=end note;
+
+nob:
+  user types in "aaa" the presses save
+en
+
+->: HPOST [{content: "aaa", date: "2021-06-03T14:02:24.261Z"}] theHttp/new_note_spa
+
+nob:
+  spa.js: adds "aaa" to the existing list and rerenders notes
+en
+
