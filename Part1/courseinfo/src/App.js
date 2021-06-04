@@ -3,20 +3,37 @@ import { Header } from "./Components/Header";
 import { Contents } from "./Components/Contents";
 import { Total } from "./Components/Total";
 
-const exercises1 = 10;
-const exercises2 = 7;
-const exercises3 = 14;
-
-const exerciseS = [exercises1, exercises2, exercises3];
 
 const App = () => {
-  const course = "Half Stack application development";
+
+  const partS = [
+   {
+    name: "Fundamentals of React",
+    exercises: 10,
+  },
+   {
+    name: "Using props to pass data",
+    exercises: 7,
+  },
+   {
+    name: "State of a component",
+    exercises: 14,
+  } 
+  ];
+
+  const courseName = "Half Stack application development";
+
+  const course = {
+    name: courseName,
+    parts: partS,
+  };
+  console.log(course.parts)
 
   return (
     <div>
-      <Header course={course} />
-      <Contents exerciseS={exerciseS} />
-      <Total exerciseS={exerciseS} />
+      <Header course={courseName} />
+      <Contents course={course} />
+      <Total course={course} />
     </div>
   );
 };
