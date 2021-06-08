@@ -1,11 +1,28 @@
 import React, { useState } from "react";
+import { PrintList } from "./Components/PrintList";
+import { MyForm } from "./Components/MyForm";
 
 export const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "1234567" },
+  ]);
   const [newName, setNewName] = useState("");
-  const handleChange = (event) => {
+  const [newNumber, setNewNumber] = useState("");
+  const [searchString, setSearchString] = useState("");
+
+  const handleNameChange = (event) => {
     event.preventDefault();
     setNewName(event.target.value);
+    console.log(event);
+  };
+  const handleNumberChange = (event) => {
+    event.preventDefault();
+    setNewNumber(event.target.value);
+    console.log(event);
+  };
+  const handleSearchString = (event) => {
+    event.preventDefault();
+    setSearchString(event.target.value);
     console.log(event);
   };
   const checkSame = (myObject, myText) => {
@@ -15,28 +32,26 @@ export const App = () => {
   };
   const addPerson = (event) => {
     event.preventDefault();
-    if(checkSame(persons, newName)) window.alert(`Name ${newName} already exists`);
+    if (checkSame(persons, newName))
+      window.alert(`Name ${newName} already exists`);
     console.log(persons.concat({ name: newName }));
-    setPersons(persons.concat({ name: newName }));
+    setPersons(persons.concat({ name: newName, number: newNumber }));
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
-        <div>
-          name: <input onChange={handleChange} />
-        </div>
-        <div>
-          <button type="submit" onClick={addPerson}>
-            add
-          </button>
-        </div>
-      </form>
+      <div>
+        search : <input onChange={handleSearchString} />
+      </div>
+      <MyForm
+        handleNameChange={handleNameChange}
+        handleSearchString={handleSearchString}
+        handleNumberChange={handleNumberChange}
+        addPerson={addPerson}
+      />
       <h2>Numbers</h2>
-      {persons.map((personName) => (
-        <div key={personName.name}> {personName.name}</div>
-      ))}
+      <PrintList persons={persons} searchString={searchString} />
     </div>
   );
 };
