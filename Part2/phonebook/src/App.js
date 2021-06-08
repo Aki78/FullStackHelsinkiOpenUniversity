@@ -1,11 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PrintList } from "./Components/PrintList";
 import { MyForm } from "./Components/MyForm";
+import axios from 'axios'
 
 export const App = () => {
   const [persons, setPersons] = useState([
     { name: "Arto Hellas", number: "1234567" },
   ]);
+
+  useEffect(() => {
+    console.log('effect')
+
+    const eventHandler = (response) => {
+      console.log("promise fulfilled");
+      console.log(response.data)
+      setPersons(response.data);
+    };
+
+    const promise = axios.get("http://localhost:3002/persons");
+    promise.then(eventHandler);
+  }, []);
+
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchString, setSearchString] = useState("");
