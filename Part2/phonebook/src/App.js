@@ -1,29 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { PrintList } from "./Components/PrintList";
 import { MyForm } from "./Components/MyForm";
-import axios from 'axios'
+import axios from "axios";
+import { getAll, create, update } from "./service";
+
+const baseUrl = "http://localhost:3002/persons/";
 
 export const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "1234567" },
-  ]);
-
-  useEffect(() => {
-    console.log('effect')
-
-    const eventHandler = (response) => {
-      console.log("promise fulfilled");
-      console.log(response.data)
-      setPersons(response.data);
-    };
-
-    const promise = axios.get("http://localhost:3002/persons");
-    promise.then(eventHandler);
-  }, []);
-
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchString, setSearchString] = useState("");
+
+  const checkSame = (myObject, myText) => {
+    return myObject.reduce((a, b) => {
+      return b.name === newName || a;
+    }, false);
+  };
+
+  useEffect(() => {
+    const eventHandler = (response) => {
+      console.log("promise fulfilled");
+      console.log(response);
+      setPersons(response);
+    };
+
+    getAll().then(eventHandler);
+  }, []);
 
   const handleNameChange = (event) => {
     event.preventDefault();
@@ -40,17 +43,28 @@ export const App = () => {
     setSearchString(event.target.value);
     console.log(event);
   };
-  const checkSame = (myObject, myText) => {
-    return myObject.reduce((a, b) => {
-      return b.name === newName || a;
-    }, false);
+
+  const deletePerson = (id) => {
+    const newList = persons.filter((item) => item.id !== id);
+    axios.delete(baseUrl + id);
+    setPersons(newList);
   };
+
   const addPerson = (event) => {
     event.preventDefault();
-    if (checkSame(persons, newName))
-      window.alert(`Name ${newName} already exists`);
-    console.log(persons.concat({ name: newName }));
-    setPersons(persons.concat({ name: newName, number: newNumber }));
+    if (checkSame(persons, newName)) {
+      const selectedObj = persons.find((x) => x.name === newName);
+      console.log(selectedObj, "ididid");
+      const changedPerson = { ...selectedObj, number: newNumber };
+      setPersons(
+        persons.map((pers) => (pers.id === selectedObj.id ? changedPerson : pers))
+      );
+      update(selectedObj.id, { ...selectedObj, number: newNumber });
+    } else {
+      const newObject = { name: newName, number: newNumber };
+      create(newObject);
+      setPersons(persons.concat(newObject));
+    }
   };
 
   return (
@@ -66,7 +80,11 @@ export const App = () => {
         addPerson={addPerson}
       />
       <h2>Numbers</h2>
-      <PrintList persons={persons} searchString={searchString} />
+      <PrintList
+        deletePerson={deletePerson}
+        persons={persons}
+        searchString={searchString}
+      />
     </div>
   );
 };

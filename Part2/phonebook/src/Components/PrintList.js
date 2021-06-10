@@ -1,9 +1,9 @@
-export const PrintList = ({ persons, searchString }) =>
+export const PrintList = ({ persons, searchString, deletePerson }) =>
   persons.map((persons) => {
     if (persons.name.toLowerCase().includes(searchString.toLowerCase()))
       return (
-        <div key={persons.name}>
-          {persons.name} {persons.number}
+        <div key={persons.id}>
+          {persons.name} {persons.number} <button onClick={() => deletePerson(persons.id)} style={{ borderColor:"red"}}> delete </button>
         </div>
       );
   });
