@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  animation: logMessage 5s infinite;
 }
 
 .App-logo {
@@ -34,5 +35,33 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.logMessage{
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  animation:  animateMe 5s normal;
+  color:white;
+  background:white;
+}
+
+@keyframes animateMe {
+  /* You could think of as "step 1" */
+  0% {
+    color: white;
+  background: white;
+  }
+  50% {
+    color: green;
+  background: lightgrey;
+  }
+  /* You could think of as "step 2" */
+  100% {
+    color: white;
+  background: white;
   }
 }

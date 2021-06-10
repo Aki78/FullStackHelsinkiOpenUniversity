@@ -3,6 +3,7 @@ import { PrintList } from "./Components/PrintList";
 import { MyForm } from "./Components/MyForm";
 import axios from "axios";
 import { getAll, create, update } from "./service";
+import { PrintLog } from "./Components/PrintLog";
 
 const baseUrl = "http://localhost:3002/persons/";
 
@@ -10,6 +11,7 @@ export const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [messageInject, setMessageInject] = useState("");
   const [searchString, setSearchString] = useState("");
 
   const checkSame = (myObject, myText) => {
@@ -57,12 +59,17 @@ export const App = () => {
       console.log(selectedObj, "ididid");
       const changedPerson = { ...selectedObj, number: newNumber };
       setPersons(
-        persons.map((pers) => (pers.id === selectedObj.id ? changedPerson : pers))
+        persons.map((pers) =>
+          pers.id === selectedObj.id ? changedPerson : pers
+        )
       );
       update(selectedObj.id, { ...selectedObj, number: newNumber });
+      setMessageInject(`Name: ${selectedObj.name}'s number has been changed.`);
     } else {
       const newObject = { name: newName, number: newNumber };
       create(newObject);
+      setMessageInject(`Name: ${newObject.name} has been injected.`);
+      console.log(messageInject);
       setPersons(persons.concat(newObject));
     }
   };
@@ -70,6 +77,7 @@ export const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <PrintLog injectMessage={messageInject} />
       <div>
         search : <input onChange={handleSearchString} />
       </div>
