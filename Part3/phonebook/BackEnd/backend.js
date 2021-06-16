@@ -1,8 +1,27 @@
 const { request } = require("express");
+const morgan = require("morgan");
 const express = require("express");
 const app = express();
 
 app.use(express.json());
+//morgan("tiny");
+//morgan(function (tokens, req, res) {
+//return [
+//tokens.method(req, res),
+//tokens.url(req, res),
+//tokens.status(req, res),
+//tokens.res(req, res, "content-length"),
+//"-",
+//tokens["response-time"](req, res),
+//"ms",
+//].join(" ");
+//});
+morgan.token("body", (req, res) => JSON.stringify(req.body));
+app.use(
+  morgan(
+    ":method :url :status :res[content-length] - :response-time ms posted :body"
+  )
+);
 
 let persons = [
   {
@@ -36,12 +55,19 @@ app.get("/:id", (request, response) => {
 app.post("/persons", (request, response) => {
   const addPerson = request.body;
   //console.log(addPerson);
-  console.log(addPerson.number)
   if (
-    persons.reduce((acc, person) => acc && person.name !== addPerson.name, true) && addPerson.name && addPerson.number
+    persons.reduce(
+      (acc, person) => acc && person.name !== addPerson.name,
+      true
+    ) &&
+    addPerson.name &&
+    addPerson.number
   )
     response.json(addPerson);
-  else response.status(400).json({ error: "name already exists, or name or number undefined" });
+  else
+    response
+      .status(400)
+      .json({ error: "name already exists, or name or number undefined" });
 });
 
 app.delete("/:id", (request, response) => {
