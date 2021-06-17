@@ -1,21 +1,11 @@
 const { request } = require("express");
+const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");
 const app = express();
 
+app.use(cors());
 app.use(express.json());
-//morgan("tiny");
-//morgan(function (tokens, req, res) {
-//return [
-//tokens.method(req, res),
-//tokens.url(req, res),
-//tokens.status(req, res),
-//tokens.res(req, res, "content-length"),
-//"-",
-//tokens["response-time"](req, res),
-//"ms",
-//].join(" ");
-//});
 morgan.token("body", (req, res) => JSON.stringify(req.body));
 app.use(
   morgan(

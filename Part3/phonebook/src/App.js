@@ -5,9 +5,10 @@ import axios from "axios";
 import { getAll, create, update } from "./service";
 import { PrintLog } from "./Components/PrintLog";
 
-const baseUrl = "http://localhost:3002/persons/";
+const baseUrl = "http://localhost:3001/persons/";
 
 export const App = () => {
+  axios.get(baseUrl)
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
