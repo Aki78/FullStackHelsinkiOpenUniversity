@@ -5,10 +5,10 @@ import axios from "axios";
 import { getAll, create, update } from "./service";
 import { PrintLog } from "./Components/PrintLog";
 
-const baseUrl = "http://localhost:3001/persons/";
+const baseUrl = "https://part3exercises.herokuapp.com/persons";
+
 
 export const App = () => {
-  axios.get(baseUrl)
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
@@ -49,7 +49,7 @@ export const App = () => {
 
   const deletePerson = (id) => {
     const newList = persons.filter((item) => item.id !== id);
-    axios.delete(baseUrl + id);
+    //axios.delete(baseUrl + id);
     setPersons(newList);
   };
 

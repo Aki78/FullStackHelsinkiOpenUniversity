@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3002/persons/";
+const baseUrl = "https://part3exercises.herokuapp.com/persons";
 
 export const getAll = () => {
   const request = axios.get(baseUrl);
