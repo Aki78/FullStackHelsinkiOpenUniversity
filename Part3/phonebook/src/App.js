@@ -4,7 +4,7 @@ import { PrintList } from "./Components/PrintList";
 import { MyForm } from "./Components/MyForm";
 import { getAll, create, update } from "./service";
 import { PrintLog } from "./Components/PrintLog";
-
+const a = 3
 export const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
@@ -65,7 +65,9 @@ export const App = () => {
       setMessageInject(`Name: ${selectedObj.name}'s number has been changed.`);
     } else {
       const newObject = { name: newName, number: newNumber };
-      create(newObject);
+      create(newObject).catch((e) => {
+        console.log("eeeeee", e);
+      });
       setMessageInject(`Name: ${newObject.name} has been injected.`);
       console.log(messageInject);
       setPersons(persons.concat(newObject));

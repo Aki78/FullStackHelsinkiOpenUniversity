@@ -9,7 +9,9 @@ export const getAll = () => {
 
 export const create = (newObject) => {
   const request = axios.post(baseUrl, newObject);
-  return request.then((response) => response.data);
+  return request
+    .then((response) => response.data)
+    .catch("tfx", console.log(error => error.response.data));
 };
 
 export const update = (id, newObject) => {
