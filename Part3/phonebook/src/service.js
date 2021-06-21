@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = "https://part3exercises.herokuapp.com/persons";
+//const baseUrl = "http://localhost:3001/persons";
+const baseUrl = "/persons";
 
 export const getAll = () => {
   const request = axios.get(baseUrl);
@@ -12,6 +13,9 @@ export const create = (newObject) => {
 };
 
 export const update = (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject);
+  const request = axios.put(
+    `http://localhost:3001/api/persons/${id}`,
+    newObject
+  );
   return request.then((response) => response.data);
 };

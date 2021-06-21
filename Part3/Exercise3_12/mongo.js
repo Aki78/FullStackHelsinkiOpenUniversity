@@ -15,7 +15,7 @@ const password = process.argv[2];
 const addName = process.argv[3];
 const addNumber = process.argv[4];
 
-const url = `mongodb+srv://aki_user_123:${password}@cluster0.dyqgq.mongodb.net/notesApp?retryWrites=true&w=majority`;
+const url = `mongodb+srv://aki_user_123:${password}@cluster0.dyqgq.mongodb.net/phoneBookNumbers?retryWrites=true&w=majority`;
 
 mongoose.connect(url, {
   useNewUrlParser: true,

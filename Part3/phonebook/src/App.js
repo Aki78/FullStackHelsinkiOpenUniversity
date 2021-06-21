@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { PrintList } from "./Components/PrintList";
 import { MyForm } from "./Components/MyForm";
-import axios from "axios";
 import { getAll, create, update } from "./service";
 import { PrintLog } from "./Components/PrintLog";
-
-const baseUrl = "https://part3exercises.herokuapp.com/persons";
-
 
 export const App = () => {
   const [persons, setPersons] = useState([]);
@@ -49,7 +46,7 @@ export const App = () => {
 
   const deletePerson = (id) => {
     const newList = persons.filter((item) => item.id !== id);
-    //axios.delete(baseUrl + id);
+    axios.delete(`/api/persons/${id}`);
     setPersons(newList);
   };
 
