@@ -59,15 +59,27 @@ describe("total likes", () => {
       likes: 7,
       __v: 0,
     },
+    {
+      _id: "2a422aa71b54a676234d17f0",
+      title: "XXX",
+      author: "AAA",
+      url: "CCC",
+      likes: 6,
+      __v: 0,
+    },
   ];
 
   test("when list has only one blog, equals the likes of that", () => {
     console.log("totakl is: ", addAllLikes.totalLikes(listWithOneBlog));
     const result = addAllLikes.totalLikes(listWithOneBlog);
-    expect(result).toBe(12);
+    expect(result).toBe(18);
   });
-  test("DDDDD", () => {
+  test("Max likes", () => {
     const result = addAllLikes.favoriteBlog(listWithOneBlog);
     expect(result).toEqual({ title: "BBB", author: "AAA", likes: 7 });
+  });
+  test(" most author", () => {
+    const result = addAllLikes.mostAuthor(listWithOneBlog);
+    expect(result).toEqual("AAA");
   });
 });
