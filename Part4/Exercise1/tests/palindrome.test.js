@@ -69,6 +69,8 @@ describe("total likes", () => {
     },
   ];
 
+  global.listWithOneBlog;
+
   test("when list has only one blog, equals the likes of that", () => {
     console.log("totakl is: ", addAllLikes.totalLikes(listWithOneBlog));
     const result = addAllLikes.totalLikes(listWithOneBlog);
@@ -80,6 +82,10 @@ describe("total likes", () => {
   });
   test(" most author", () => {
     const result = addAllLikes.mostAuthor(listWithOneBlog);
-    expect(result).toEqual("AAA");
+    expect(result).toEqual({ author: "AAA", totalBooks: 2 });
+  });
+  test(" most total Likes", () => {
+    const result = addAllLikes.mostLikedAuthor(listWithOneBlog);
+    expect(result).toEqual({ author: "AAA", totalLikes: 13 });
   });
 });

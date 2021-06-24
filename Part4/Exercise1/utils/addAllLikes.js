@@ -19,19 +19,32 @@ const favoriteBlog = (listOfBlogs) => {
   return { title: favBook.title, author: favBook.author, likes: favBook.likes };
 };
 
-const mostAuthor = (listOfBlogs) => {
-  console.log("TESTES");
-  _.head(
-    _(listOfBlogs)
-      .countBy((x) => x.author)
-      .entries()
-      .maxBy(_.last)
+const mostLikedAuthor = (listOfBlogs) => {
+  const group = _.groupBy(listOfBlogs, "author");
+  const totalLikes = _.map(group, (x) => x.reduce((a, b) => b.likes + a, 0));
+  const authors = _.map(group, (x) => x[0].author);
+  const indexOfMaxValue = totalLikes.reduce(
+    (iMax, x, i, arr) => (x > arr[iMax] ? i : iMax),
+    0
   );
-  return _.head(
-    _(listOfBlogs)
-      .countBy((x) => x.author)
-      .entries()
-      .maxBy(_.last)
-  );
+  return {
+    author: authors[indexOfMaxValue],
+    totalLikes: totalLikes[indexOfMaxValue],
+  };
 };
-module.exports = { totalLikes, favoriteBlog, mostAuthor };
+
+const mostAuthor = (listOfBlogs) => {
+  const group = _.groupBy(listOfBlogs, "author");
+  const authors = _.map(group, (x) => x[0].author);
+  const totals = _.map(group, (x) => x.reduce((a, b) => 1 + a, 0));
+  const indexOfMaxValue = totals.reduce(
+    (iMax, x, i, arr) => (x > arr[iMax] ? i : iMax),
+    0
+  );
+  return {
+    author: authors[indexOfMaxValue],
+    totalBooks: totals[indexOfMaxValue],
+  };
+};
+
+module.exports = { totalLikes, favoriteBlog, mostAuthor, mostLikedAuthor };
