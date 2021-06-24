@@ -51,11 +51,23 @@ describe("total likes", () => {
       likes: 5,
       __v: 0,
     },
+    {
+      _id: "5a422aa71b54a676234d17f9",
+      title: "BBB",
+      author: "AAA",
+      url: "CCCCCCC",
+      likes: 7,
+      __v: 0,
+    },
   ];
 
   test("when list has only one blog, equals the likes of that", () => {
     console.log("totakl is: ", addAllLikes.totalLikes(listWithOneBlog));
     const result = addAllLikes.totalLikes(listWithOneBlog);
-    expect(result).toBe(5);
+    expect(result).toBe(12);
+  });
+  test("DDDDD", () => {
+    const result = addAllLikes.favoriteBlog(listWithOneBlog);
+    expect(result).toEqual({ title: "BBB", author: "AAA", likes: 7 });
   });
 });
