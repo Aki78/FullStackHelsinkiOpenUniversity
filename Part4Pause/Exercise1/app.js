@@ -9,7 +9,10 @@ const mongoose = require("mongoose");
 
 logger.info("connecting to", config.MONGODB_URI);
 
-const mongoUrl = config.MONGODB_URI;
+const mongoUrl =
+  process.env.NODE_ENV === "test"
+    ? process.env.TEST_MONGODB_URI
+    : config.MONGODB_URI;
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
