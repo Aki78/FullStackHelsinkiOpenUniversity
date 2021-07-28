@@ -9,7 +9,7 @@ test("blogs are returned as json", async () => {
     .get("/api/blogs")
     .expect(200)
     .expect("Content-Type", /application\/json/);
-});
+}, 100000);
 
 //test("there are five blogs", async () => {
   //const response = await api.get("/api/blogs");
