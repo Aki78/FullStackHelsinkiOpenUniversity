@@ -10,9 +10,7 @@ const mongoose = require("mongoose");
 logger.info("connecting to", config.MONGODB_URI);
 
 const mongoUrl =
-  process.env.NODE_ENV === "test"
-    ? process.env.TEST_MONGODB_URI
-    : config.MONGODB_URI;
+  process.env.NODE_ENV === "test" ? config.MONGODB_URI : config.MONGODB_URI;
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -24,9 +22,14 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/blogs", blogRouter);
 
-const PORT = config.PORT;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+//const PORT = config.PORT;
+//if (process.env.NODE_ENV === "test") {
+//console.log("test");
+//} else
+//const server = app.listen(PORT, async () => {
+//console.log(`Server running on port ${PORT}`);
+//});
 
-module.export = app;
+//const server = server
+
+module.exports = app;
