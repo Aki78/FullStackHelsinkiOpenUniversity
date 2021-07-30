@@ -22,13 +22,13 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/blogs", blogRouter);
 
-//const PORT = config.PORT;
+const PORT = config.PORT;
 //if (process.env.NODE_ENV === "test") {
 //console.log("test");
 //} else
-//const server = app.listen(PORT, async () => {
-//console.log(`Server running on port ${PORT}`);
-//});
+const server = app.listen(PORT, async () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 //const server = server
 
