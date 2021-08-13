@@ -3,8 +3,11 @@ import Blog from "./components/Blog";
 import Logout from "./components/Logout";
 import Togglable from "./components/Togglable";
 import LoginForm from "./forms/loginForm";
+import LoginForm from "./forms/blogForm";
 import blogService from "./services/blogs";
+import compareNumbers from "./helperFunctions/sortLikes";
 import loginService from "./services/login";
+
 import { PrintLog } from "./components/PrintLog";
 import axios from "axios";
 
@@ -83,6 +86,15 @@ const App = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.value);
   };
+  const handleNewAuthor = (e) => {
+    setNewAuthor(e.value);
+  };
+  const handleNewURL = (e) => {
+    setNewURL(e.value);
+  };
+  const handleNewTitle = (e) => {
+    setNewTitle(e.value);
+  };
   const loginForm = () => {
     const hideWhenVisible = { display: loginVisible ? "none" : "" };
     const showWhenVisible = { display: loginVisible ? "" : "none" };
@@ -97,58 +109,25 @@ const App = () => {
         />
       </Togglable>
     );
-    //return (
-    //<form onSubmit={handleLogin}>
-    //<h2>hi</h2>
-    //<div>
-    //username
-    //<input
-    //type="text"
-    //value={username}
-    //name="Username"
-    //onChange={({ target }) => setUsername(target.value)}
-    ///>
-    //</div>
-    //<div>
-    //password
-    //<input
-    //type="password"
-    //value={password}
-    //name="Password"
-    //onChange={({ target }) => setPassword(target.value)}
-    ///>
-    //</div>
-    //<button type="submit">login</button>
-    //</form>
-    //);
   };
 
   const blogForm = () => {
     return (
       <Togglable buttonLabel="new Blog">
-        <form onSubmit={addBlog}>
-          title:{" "}
-          <input
-            value={newTitle}
-            onChange={({ target }) => setNewTitle(target.value)}
-          />
-          author:{" "}
-          <input
-            value={newAuthor}
-            onChange={({ target }) => setNewAuthor(target.value)}
-          />
-          url:{" "}
-          <input
-            value={newURL}
-            onChange={({ target }) => setNewURL(target.value)}
-          />
-          <button type="submit">save</button>
-        </form>
+        <BlogForm
+          newTitle={newTitle}
+          newAuthor={newAuthor}
+          newURL={newURL}
+          handleNewTitle={handleNewTitle}
+          handleNewAuthor={handleNewAuthor}
+          handleNewURL={handleNewURL}
+        />
       </Togglable>
     );
   };
   const injectMessage = `Added: ${newTitle} ${newAuthor}  `;
   console.log("erorsTATE", errorState);
+  blogs.sort(compareNumbers)
   return (
     <div>
       <PrintLog

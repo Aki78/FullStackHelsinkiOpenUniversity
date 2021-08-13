@@ -23,6 +23,4 @@ const Togglable = (props) => {
   );
 };
 
-Togglable.displaName = "Togglable";
-
 export default Togglable;
